@@ -78,12 +78,11 @@ services:
     networks: ['demo']
     restart: unless-stopped
     ports:
-      - {POSTGRES_PASSWORD}:5432
+      - 5433:5432
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
-      - POSTGRES_PORT
     volumes:
       - postgres_storage:/var/lib/postgresql/data
     healthcheck:
