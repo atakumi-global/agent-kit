@@ -4,7 +4,7 @@ volumes:
   ollama_storage:
   qdrant_storage:
   open-webui:
-  flowise:
+#  flowise:
 
 networks:
   demo:
@@ -46,22 +46,22 @@ x-init-ollama: &init-ollama
     - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull llama3.1; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
 
 services:
-  flowise:
-    image: flowiseai/flowise
-    networks: ['demo']
-    restart: unless-stopped
-    container_name: flowise
-    environment:
-        - PORT=3001
-        - FLOWISE_USERNAME
-        - FLOWISE_PASSWORD  
-    ports:
-        - 3001:3001
-    extra_hosts:
-      - "host.docker.internal:host-gateway"        
-    volumes:
-        - ~/.flowise:/root/.flowise
-    entrypoint: /bin/sh -c "sleep 3; flowise start"
+#  flowise:
+#    image: flowiseai/flowise
+#    networks: ['demo']
+#    restart: unless-stopped
+#    container_name: flowise
+#    environment:
+#        - PORT=3001
+#        - FLOWISE_USERNAME
+#        - FLOWISE_PASSWORD  
+#    ports:
+#        - 3001:3001
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"        
+#    volumes:
+#        - ~/.flowise:/root/.flowise
+#    entrypoint: /bin/sh -c "sleep 3; flowise start"
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -132,9 +132,9 @@ services:
     volumes:
       - qdrant_storage:/qdrant/storage
 
-  ollama-cpu:
-    profiles: ["cpu"]
-    <<: *service-ollama
+#  ollama-cpu:
+#    profiles: ["cpu"]
+#    <<: *service-ollama
 
   ollama-gpu:
     profiles: ["gpu-nvidia"]
@@ -147,11 +147,11 @@ services:
               count: 1
               capabilities: [gpu]
 
-  ollama-pull-llama-cpu:
-    profiles: ["cpu"]
-    <<: *init-ollama
-    depends_on:
-      - ollama-cpu
+#  ollama-pull-llama-cpu:
+#    profiles: ["cpu"]
+#    <<: *init-ollama
+#    depends_on:
+#      - ollama-cpu
 
   ollama-pull-llama-gpu:
     profiles: ["gpu-nvidia"]
