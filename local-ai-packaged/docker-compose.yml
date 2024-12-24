@@ -45,7 +45,7 @@ x-init-ollama: &init-ollama
     - "-c"
     - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull llama3.1; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
 
-
+services:
 #  flowise:
 #    image: flowiseai/flowise
 #    networks: ['demo']
@@ -62,7 +62,7 @@ x-init-ollama: &init-ollama
 #    volumes:
 #        - ~/.flowise:/root/.flowise
 #    entrypoint: /bin/sh -c "sleep 3; flowise start"
-services:
+
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     networks: ['demo']
@@ -93,7 +93,7 @@ services:
       timeout: 5s
       retries: 10
 
-n8n-import:
+  n8n-import:
     <<: *service-n8n
     container_name: n8n-import
     entrypoint: /bin/sh
@@ -137,7 +137,7 @@ n8n-import:
 #    <<: *service-ollama
 
   ollama-gpu:
-#    profiles: ["gpu-nvidia"]
+    profiles: ["gpu-nvidia"]
     <<: *service-ollama
     deploy:
       resources:
@@ -154,7 +154,7 @@ n8n-import:
 #      - ollama-cpu
 
   ollama-pull-llama-gpu:
-#    profiles: ["gpu-nvidia"]
+    profiles: ["gpu-nvidia"]
     <<: *init-ollama
     depends_on:
       - ollama-gpu
