@@ -100,8 +100,14 @@ services:
     command:
       - "-c"
       - |
+        echo "Starting import process..."
+        mkdir -p /backup/credentials /backup/workflows
+        echo "Created directories"
         n8n import:credentials --separate --input=/backup/credentials
+        echo "Credentials import complete"
         n8n import:workflow --separate --input=/backup/workflows
+        echo "Workflows import complete"
+        echo "All imports finished, exiting..."
         exit 0
     volumes:
       - ./n8n/backup:/backup
